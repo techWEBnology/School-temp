@@ -3,115 +3,460 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SmartFuture School</title>
+    <title>SmartFuture School | Excellence in Education</title>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <!-- Font Awesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
     <style>
-        *{
-            margin:0; padding:0; box-sizing:border-box;
-            font-family:Arial, sans-serif;
+        /* --- VARIABLES & RESET --- */
+        :root {
+            --primary: #1a73e8; /* Professional Blue */
+            --dark: #0f3460;    /* Navy */
+            --light: #f4f6f8;   /* Light Gray */
+            --gold: #ffb400;    /* Accent for Toppers */
+            --text: #333;
+            --white: #fff;
+            --shadow: 0 5px 15px rgba(0,0,0,0.1);
         }
-        body{background:#f4f4f4;}
-        header{
-            width:100%; position:fixed; top:0; left:0;
-            background:white; display:flex; justify-content:space-between;
-            align-items:center; padding:10px 20px; box-shadow:0 2px 10px rgba(0,0,0,0.1);
-            z-index:1000;
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; scroll-behavior: smooth; }
+        body { background: var(--light); color: var(--text); line-height: 1.6; }
+        a { text-decoration: none; color: inherit; transition: 0.3s; }
+        ul { list-style: none; }
+        img { width: 100%; height: auto; object-fit: cover; }
+
+        /* --- HEADER --- */
+        header {
+            width: 100%; position: fixed; top: 0; left: 0;
+            background: rgba(255, 255, 255, 0.95);
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 15px 5%; box-shadow: var(--shadow); z-index: 1000;
+            backdrop-filter: blur(10px);
         }
-        header h2{color:#1a73e8;}
-        nav a{
-            margin-left:20px; text-decoration:none; color:#333;
-            font-weight:bold;
+        .logo { font-size: 1.5rem; font-weight: 700; color: var(--primary); display: flex; align-items: center; gap: 10px; }
+        .logo i { font-size: 1.8rem; }
+        
+        nav ul { display: flex; gap: 30px; }
+        nav a { font-weight: 500; font-size: 0.95rem; color: var(--dark); position: relative; }
+        nav a:hover { color: var(--primary); }
+        nav a::after {
+            content: ''; position: absolute; width: 0; height: 2px;
+            bottom: -5px; left: 0; background: var(--primary); transition: 0.3s;
         }
-        #searchBar{
-            padding:7px 12px; border:1px solid #ccc; border-radius:5px;
+        nav a:hover::after { width: 100%; }
+
+        /* Mobile Menu Button */
+        .menu-toggle { display: none; font-size: 1.5rem; cursor: pointer; color: var(--dark); }
+
+        /* --- HERO SECTION --- */
+        .hero {
+            height: 90vh; background: linear-gradient(rgba(15, 52, 96, 0.6), rgba(15, 52, 96, 0.6)), url('https://images.unsplash.com/photo-1523050854058-8df90110c9f1?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80');
+            background-size: cover; background-position: center;
+            display: flex; flex-direction: column; justify-content: center; align-items: center;
+            text-align: center; color: var(--white); padding: 0 20px;
+            margin-top: 60px;
         }
-        /* HERO SLIDER */
-        .slider{
-            margin-top:70px;
-            width:100%; height:300px; overflow:hidden;
-            position:relative;
+        .hero h1 { font-size: 3.5rem; margin-bottom: 20px; animation: fadeInUp 1s ease; }
+        .hero p { font-size: 1.2rem; margin-bottom: 30px; max-width: 600px; animation: fadeInUp 1.5s ease; }
+        .btn {
+            padding: 12px 30px; background: var(--primary); color: white;
+            border-radius: 30px; font-weight: 600; border: none; cursor: pointer;
+            transition: 0.3s; display: inline-block;
         }
-        .slides{
-            width:300%; height:100%; display:flex;
-            animation:slide 12s infinite;
+        .btn:hover { background: var(--dark); transform: translateY(-3px); }
+
+        /* --- STATS BANNER --- */
+        .stats {
+            display: flex; justify-content: space-around; background: var(--white);
+            padding: 40px 5%; margin-top: -50px; position: relative;
+            box-shadow: var(--shadow); border-radius: 10px; width: 90%; margin-left: 5%;
+            z-index: 10;
         }
-        .slides img{
-            width:100%; height:300px; object-fit:cover;
+        .stat-item { text-align: center; }
+        .stat-item h3 { font-size: 2.5rem; color: var(--primary); margin-bottom: 5px; }
+        .stat-item p { color: #666; font-size: 0.9rem; font-weight: 600; text-transform: uppercase; }
+
+        /* --- SECTIONS COMMON --- */
+        section { padding: 80px 5%; }
+        .section-title { text-align: center; margin-bottom: 50px; }
+        .section-title h2 { font-size: 2.2rem; color: var(--dark); margin-bottom: 10px; }
+        .section-title span { width: 60px; height: 4px; background: var(--primary); display: block; margin: 0 auto; }
+
+        /* --- TOPPERS (HALL OF FAME) --- */
+        .toppers-grid {
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 30px;
         }
-        @keyframes slide{
-            0%{transform:translateX(0);} 
-            33%{transform:translateX(-100%);} 
-            66%{transform:translateX(-200%);} 
-            100%{transform:translateX(0);} 
+        .topper-card {
+            background: var(--white); border-radius: 15px; overflow: hidden;
+            box-shadow: var(--shadow); text-align: center; transition: 0.3s; position: relative;
         }
-        /* SECTIONS */
-        section{padding:40px 20px;}
-        .box{
-            background:white; padding:20px; border-radius:10px;
-            box-shadow:0 2px 10px rgba(0,0,0,0.1);
-            margin-bottom:20px;
-            transition:0.3s;
+        .topper-card:hover { transform: translateY(-10px); }
+        .topper-badge {
+            position: absolute; top: 15px; right: 15px; background: var(--gold);
+            color: var(--dark); padding: 5px 10px; border-radius: 20px; font-size: 0.8rem; font-weight: bold;
         }
-        .box:hover{transform:scale(1.02);}        
-        /* ADMISSION TABLE */
-        table{
-            width:100%; border-collapse:collapse;
-            margin-top:20px;
+        .topper-img { width: 120px; height: 120px; border-radius: 50%; border: 4px solid var(--primary); margin: 30px auto 15px; object-fit: cover; }
+        .topper-info { padding: 0 20px 30px; }
+        .topper-info h3 { color: var(--dark); margin-bottom: 5px; }
+        .topper-info p { color: #666; font-size: 0.9rem; }
+        .percent { font-size: 1.5rem; color: var(--primary); font-weight: 700; margin-top: 10px; display: block; }
+
+        /* --- FACILITIES --- */
+        .facilities-grid {
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 20px;
         }
-        th, td{
-            padding:12px; border:1px solid #ccc; text-align:left;
+        .facility-box {
+            background: var(--white); padding: 30px; border-radius: 10px;
+            text-align: center; box-shadow: var(--shadow); transition: 0.3s; border-bottom: 4px solid transparent;
         }
-        th{background:#1a73e8; color:white;}
-        /* FOOTER */
-        footer{
-            background:#222; color:white; padding:20px; text-align:center;
+        .facility-box:hover { border-bottom: 4px solid var(--primary); transform: translateY(-5px); }
+        .facility-box i { font-size: 2.5rem; color: var(--primary); margin-bottom: 15px; }
+        .facility-box h4 { font-size: 1.2rem; margin-bottom: 10px; }
+
+        /* --- FACULTY --- */
+        .faculty-grid { display: flex; flex-wrap: wrap; justify-content: center; gap: 30px; }
+        .faculty-card {
+            width: 280px; background: var(--white); border-radius: 10px;
+            box-shadow: var(--shadow); overflow: hidden; text-align: center;
         }
-        /* BUTTON */
-        button{
-            padding:10px 16px; border:none; background:#1a73e8;
-            color:white; border-radius:5px; cursor:pointer;
+        .faculty-img { height: 200px; width: 100%; object-fit: cover; }
+        .faculty-details { padding: 20px; }
+        .faculty-details h4 { color: var(--dark); font-size: 1.2rem; }
+        .faculty-details span { color: var(--primary); font-size: 0.9rem; font-weight: 600; display: block; margin-bottom: 10px; }
+        .social-icons a { color: #888; margin: 0 5px; transition: 0.3s; }
+        .social-icons a:hover { color: var(--primary); }
+
+        /* --- ADMISSION TABLE --- */
+        .table-container { overflow-x: auto; background: var(--white); padding: 20px; border-radius: 10px; box-shadow: var(--shadow); }
+        table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+        th, td { padding: 15px; text-align: left; border-bottom: 1px solid #eee; }
+        th { background: var(--primary); color: var(--white); font-weight: 600; }
+        tr:hover { background: #f9f9f9; }
+        .action-area { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; }
+        input[type="text"] { padding: 10px; border: 1px solid #ddd; border-radius: 5px; outline: none; }
+
+        /* --- CONTACT & FOOTER --- */
+        footer { background: var(--dark); color: var(--white); padding: 50px 5% 20px; }
+        .footer-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 40px; margin-bottom: 30px; }
+        .footer-col h3 { margin-bottom: 20px; color: var(--gold); }
+        .footer-col ul li { margin-bottom: 10px; }
+        .footer-col ul li a { color: #ccc; }
+        .footer-col ul li a:hover { color: var(--white); padding-left: 5px; }
+        .copyright { text-align: center; padding-top: 20px; border-top: 1px solid rgba(255,255,255,0.1); color: #888; }
+
+        /* --- RESPONSIVE --- */
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 2.5rem; }
+            .stats { flex-direction: column; gap: 30px; }
+            nav ul {
+                display: none; flex-direction: column; position: absolute;
+                top: 70px; left: 0; width: 100%; background: var(--white);
+                padding: 20px; box-shadow: var(--shadow);
+            }
+            nav ul.active { display: flex; }
+            .menu-toggle { display: block; }
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
         }
     </style>
 </head>
 <body>
-<header>
-    <h2>SmartFuture School</h2>
-    <nav>
-        <a href="#home">Home</a>
-        <a href="#about">About Us</a>
-        <a href="#admission">Admission</a>
-        <a href="#students">Students</a>
-        <a href="#contact">Contact</a>
-    </nav>
-    <input type="text" id="searchBar" placeholder="Search...">
-</header>
-<!-- Slider -->
-<div class="slider" id="home">
-    <div class="slides">
-        <img src="https://picsum.photos/1000/300?school1">
-        <img src="https://picsum.photos/1000/300?school2">
-        <img src="https://picsum.photos/1000/300?school3">
+
+    <!-- Header -->
+    <header>
+        <div class="logo">
+            <i class="fas fa-graduation-cap"></i> SmartFuture
+        </div>
+        <nav>
+            <ul id="navLinks">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#toppers">Toppers</a></li>
+                <li><a href="#faculty">Faculty</a></li>
+                <li><a href="#facilities">Facilities</a></li>
+                <li><a href="#admission">Admission</a></li>
+            </ul>
+        </nav>
+        <div class="menu-toggle" onclick="toggleMenu()">
+            <i class="fas fa-bars"></i>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <div class="hero" id="home">
+        <h1>Empowering the Next Generation</h1>
+        <p>Join a community dedicated to academic excellence, innovation, and character building.</p>
+        <a href="#admission" class="btn">Apply Now</a>
     </div>
-</div>
-<!-- ABOUT US -->
-<section id="about">
-    <div class="box">
-        <h2>About Our School</h2>
-        <p>
-            SmartFuture School is dedicated to providing modern education with world-class facilities.
-            We focus on academics, sports, creativity, and overall student development.
-        </p>
+
+    <!-- Stats Bar -->
+    <div class="stats">
+        <div class="stat-item">
+            <h3>25+</h3>
+            <p>Years of Excellence</p>
+        </div>
+        <div class="stat-item">
+            <h3>1200+</h3>
+            <p>Happy Students</p>
+        </div>
+        <div class="stat-item">
+            <h3>50+</h3>
+            <p>Qualified Teachers</p>
+        </div>
+        <div class="stat-item">
+            <h3>100%</h3>
+            <p>College Acceptance</p>
+        </div>
     </div>
-</section>
-<!-- ADMISSION TABLE -->
-<section id="admission">
-    <div class="box">
-        <h2>Admission Details</h2>
-        <button onclick="addAdmissionRow()">Add New Admission</button>
-        <table id="admissionTable">
-            <tr>
-                <th>Student ID</th>
-                <th>Name</th>
-                <
- 
- 
- 
+
+    <!-- About Section -->
+    <section id="about">
+        <div class="section-title">
+            <h2>About Our School</h2>
+            <span></span>
+        </div>
+        <div style="display: flex; flex-wrap: wrap; gap: 40px; align-items: center;">
+            <div style="flex: 1; min-width: 300px;">
+                <img src="https://images.unsplash.com/photo-1544531586-fde5298cdd40?ixlib=rb-1.2.1&auto=format&fit=crop&w=1000&q=80" style="border-radius: 10px; box-shadow: var(--shadow);">
+            </div>
+            <div style="flex: 1; min-width: 300px;">
+                <p style="margin-bottom: 20px;">SmartFuture School is dedicated to providing modern education with world-class facilities. We focus on academics, sports, creativity, and overall student development. Our campus is equipped with state-of-the-art labs and a vast library to foster learning.</p>
+                <ul style="list-style: none;">
+                    <li style="margin-bottom: 10px;"><i class="fas fa-check-circle" style="color: var(--primary);"></i> Holistic Development</li>
+                    <li style="margin-bottom: 10px;"><i class="fas fa-check-circle" style="color: var(--primary);"></i> Modern Infrastructure</li>
+                    <li style="margin-bottom: 10px;"><i class="fas fa-check-circle" style="color: var(--primary);"></i> Experienced Faculty</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- Toppers Section -->
+    <section id="toppers" style="background: #eef2f5;">
+        <div class="section-title">
+            <h2>Our Latest Toppers</h2>
+            <span></span>
+        </div>
+        <div class="toppers-grid">
+            <!-- Topper 1 -->
+            <div class="topper-card">
+                <span class="topper-badge">Science Stream</span>
+                <img src="https://i.pravatar.cc/150?img=5" alt="Student" class="topper-img">
+                <div class="topper-info">
+                    <h3>Aarav Sharma</h3>
+                    <p>Class 12th - 2024</p>
+                    <span class="percent">98.5%</span>
+                </div>
+            </div>
+            <!-- Topper 2 -->
+            <div class="topper-card">
+                <span class="topper-badge">Commerce Stream</span>
+                <img src="https://i.pravatar.cc/150?img=9" alt="Student" class="topper-img">
+                <div class="topper-info">
+                    <h3>Sneha Gupta</h3>
+                    <p>Class 12th - 2024</p>
+                    <span class="percent">97.2%</span>
+                </div>
+            </div>
+            <!-- Topper 3 -->
+            <div class="topper-card">
+                <span class="topper-badge">Class 10th</span>
+                <img src="https://i.pravatar.cc/150?img=12" alt="Student" class="topper-img">
+                <div class="topper-info">
+                    <h3>Rohan Mehta</h3>
+                    <p>Class 10th - 2024</p>
+                    <span class="percent">99.1%</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Faculty Section -->
+    <section id="faculty">
+        <div class="section-title">
+            <h2>Meet Our Faculty</h2>
+            <span></span>
+        </div>
+        <div class="faculty-grid">
+            <div class="faculty-card">
+                <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80" class="faculty-img">
+                <div class="faculty-details">
+                    <h4>Dr. Anjali Verma</h4>
+                    <span>Principal (PhD in Edu)</span>
+                    <div class="social-icons">
+                        <a href="#"><i class="fab fa-linkedin"></i></a>
+                        <a href="#"><i class="fas fa-envelope"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="faculty-card">
+                <img src="https://images.unsplash.com/photo-1568602471122-7832951cc4c5?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80" class="faculty-img">
+                <div class="faculty-details">
+                    <h4>Mr. Rajesh Kumar</h4>
+                    <span>HOD Mathematics</span>
+                    <div class="social-icons">
+                        <a href="#"><i class="fab fa-linkedin"></i></a>
+                        <a href="#"><i class="fas fa-envelope"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="faculty-card">
+                <img src="https://images.unsplash.com/photo-1544717305-2782549b5136?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80" class="faculty-img">
+                <div class="faculty-details">
+                    <h4>Ms. Priya Singh</h4>
+                    <span>Senior Physics Faculty</span>
+                    <div class="social-icons">
+                        <a href="#"><i class="fab fa-linkedin"></i></a>
+                        <a href="#"><i class="fas fa-envelope"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Facilities Section -->
+    <section id="facilities" style="background: #eef2f5;">
+        <div class="section-title">
+            <h2>World Class Facilities</h2>
+            <span></span>
+        </div>
+        <div class="facilities-grid">
+            <div class="facility-box">
+                <i class="fas fa-flask"></i>
+                <h4>Science Labs</h4>
+                <p>Fully equipped Physics, Chemistry & Bio labs.</p>
+            </div>
+            <div class="facility-box">
+                <i class="fas fa-laptop-code"></i>
+                <h4>Computer Lab</h4>
+                <p>Modern systems with high-speed internet.</p>
+            </div>
+            <div class="facility-box">
+                <i class="fas fa-book-reader"></i>
+                <h4>Library</h4>
+                <p>10,000+ books and digital resources.</p>
+            </div>
+            <div class="facility-box">
+                <i class="fas fa-basketball-ball"></i>
+                <h4>Sports Complex</h4>
+                <p>Basketball, Cricket, and Indoor games.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Admission Section -->
+    <section id="admission">
+        <div class="section-title">
+            <h2>Admission Panel</h2>
+            <span></span>
+        </div>
+        <div class="table-container">
+            <div class="action-area">
+                <h3>Current Admissions</h3>
+                <div>
+                    <input type="text" id="nameInput" placeholder="Student Name">
+                    <button class="btn" onclick="addAdmissionRow()">Add Student</button>
+                </div>
+            </div>
+            <table id="admissionTable">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Name</th>
+                        <th>Class</th>
+                        <th>Date</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>SF-001</td>
+                        <td>Amit Patel</td>
+                        <td>11th Science</td>
+                        <td>2024-03-15</td>
+                        <td><span style="color:green; font-weight:bold;">Confirmed</span></td>
+                    </tr>
+                    <tr>
+                        <td>SF-002</td>
+                        <td>Sara Khan</td>
+                        <td>9th Grade</td>
+                        <td>2024-03-16</td>
+                        <td><span style="color:orange; font-weight:bold;">Pending</span></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-grid">
+            <div class="footer-col">
+                <h3>SmartFuture</h3>
+                <p>Shaping young minds for a brighter tomorrow. Committed to excellence since 1998.</p>
+            </div>
+            <div class="footer-col">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="#home">Home</a></li>
+                    <li><a href="#admission">Admissions</a></li>
+                    <li><a href="#toppers">Results</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+            </div>
+            <div class="footer-col" id="contact">
+                <h3>Contact Us</h3>
+                <ul>
+                    <li><i class="fas fa-map-marker-alt"></i> 123 Education Lane, City Center</li>
+                    <li><i class="fas fa-phone"></i> +91 98765 43210</li>
+                    <li><i class="fas fa-envelope"></i> info@smartfuture.edu</li>
+                </ul>
+            </div>
+        </div>
+        <div class="copyright">
+            <p>&copy; 2024 SmartFuture School. All Rights Reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Toggle Mobile Menu
+        function toggleMenu() {
+            const nav = document.getElementById('navLinks');
+            nav.classList.toggle('active');
+        }
+
+        // Add Admission Row Function
+        function addAdmissionRow() {
+            const nameInput = document.getElementById('nameInput');
+            const name = nameInput.value;
+            
+            if (name === "") {
+                alert("Please enter a student name!");
+                return;
+            }
+
+            const table = document.getElementById('admissionTable').getElementsByTagName('tbody')[0];
+            const newRow = table.insertRow();
+            
+            // Generate Random ID and Date for demo
+            const randomID = 'SF-' + Math.floor(Math.random() * 900 + 100);
+            const today = new Date().toISOString().split('T')[0];
+
+            newRow.innerHTML = `
+                <td>${randomID}</td>
+                <td>${name}</td>
+                <td>11th Standard</td>
+                <td>${today}</td>
+                <td><span style="color:orange; font-weight:bold;">Pending</span></td>
+            `;
+
+            nameInput.value = ""; // Clear input
+        }
+    </script>
+
+</body>
+</html>
